@@ -20,7 +20,7 @@
       <th scope="col">State</th>
       <th scope="col">Zipcode</th>
       <th scope="col">Created At</th>
-      <th scope="col">ID</th>
+      <th scope="col">SSN</th>
     </tr>
   </thead>
   <tbody>
@@ -38,7 +38,7 @@
 			<td>{{ patient.state }}</td>
 			<td>{{ patient.zipcode }}</td>
 			<td>{{ patient.created_at }}</td>
-			<td><a href="{% url 'patient' patient.id %}">{{ patient.id }}</a></td>
+			<td><a href="{% url 'patient' patient.SSN %}">{{ patient.SSN }}</a></td>
 		</tr>
 	{% endfor %}
 

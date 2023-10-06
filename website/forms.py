@@ -45,7 +45,10 @@ class AddPatientForm(forms.ModelForm):
 							 label="")
 	DOB = forms.DateField(required=True, 
 					   widget=forms.widgets.DateInput(attrs={"placeholder":"Date of Birth", "class":"form-control"}),
-					   label="Year-Month-Day")	
+					   label="Year-Month-Day")
+	SSN = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"SSN", "class":"form-control"}), 
+						 label="")	
 	email = forms.CharField(required=True, 
 						 widget=forms.widgets.TextInput(attrs={"placeholder":"Email", "class":"form-control"}), 
 						 label="")

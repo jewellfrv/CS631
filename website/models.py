@@ -1,11 +1,12 @@
 from django.db import models
-
+from django.core.validators import MaxValueValidator
 
 class Patient(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	first_name = models.CharField(max_length=50)
 	last_name =  models.CharField(max_length=50)
 	DOB = models.DateField()
+	SSN = models.IntegerField(primary_key= True, validators=[MaxValueValidator(999999999)],unique=True)
 	email =  models.CharField(max_length=100)
 	phone = models.CharField(max_length=15)
 	address =  models.CharField(max_length=100)

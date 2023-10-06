@@ -69,7 +69,7 @@ def see_patient_table(request):
 def patient_record(request, pk):
 	if request.user.is_authenticated:
 		# Look Up Patients
-		patient_record = Patient.objects.get(id=pk)
+		patient_record = Patient.objects.get(SSN=pk)
 		return render(request, 'patients/patient.html', {'patient_record':patient_record})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
@@ -79,7 +79,7 @@ def patient_record(request, pk):
 
 def delete_patient(request, pk):
 	if request.user.is_authenticated:
-		delete_it = Patient.objects.get(id=pk)
+		delete_it = Patient.objects.get(SSN=pk)
 		delete_it.delete()
 		messages.success(request, "Patient record deleted")
 		return redirect('patient_table')
@@ -104,7 +104,7 @@ def add_patient(request):
 
 def update_patient(request, pk):
 	if request.user.is_authenticated:
-		current_patient = Patient.objects.get(id=pk)
+		current_patient = Patient.objects.get(SSN=pk)
 		form = AddPatientForm(request.POST or None, instance=current_patient)
 		if form.is_valid():
 			form.save()
