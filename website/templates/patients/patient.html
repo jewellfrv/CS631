@@ -44,11 +44,14 @@
 </div>
 
 <br/><br/>
-<a href="{% url 'patient_table' %}" class="btn btn-secondary">Back</a>
+
+<a href="{% url 'update_patient' patient_record.id %}" class="btn btn-primary">Update Record</a>
 
 <a href="{% url 'delete_patient' patient_record.id %}" class="btn btn-danger">Delete</a>
 
-<a href="{% url 'update_patient' patient_record.id %}" class="btn btn-secondary">Update Record</a>
+<a href="{% url 'patient_table' %}" class="btn btn-secondary">Back</a>
+
+
 		
 
 {% endblock %}
