@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Patient
+from .models import Patient, Doctor
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -49,4 +49,16 @@ class AddPatientForm(forms.ModelForm):
 
 	class Meta:
 		model = Patient
+		exclude = ("user",)
+		
+
+# Create Add Doctor Form
+class AddDoctorForm(forms.ModelForm):
+	first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), label="")
+	last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), label="")
+	DOB = forms.DateField(required=True, widget=forms.widgets.DateInput(attrs={"placeholder":"Date of Birth", "class":"form-control"}),label="Year-Month-Day")	
+	specialty = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Specialty", "class":"form-control"}), label="")
+
+	class Meta:
+		model = Doctor
 		exclude = ("user",)

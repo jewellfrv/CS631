@@ -11,5 +11,10 @@ urlpatterns = [
     path('delete_patient<int:pk>', views.delete_patient, name='delete_patient'),
     path('add_patient/', views.add_patient, name='add_patient'),
     path('update_patient/<int:pk>', views.update_patient, name='update_patient'),
+    path('doctor_table/', views.see_doctor_table, name='doctor_table'),
+    path('doctor<int:pk>', views.doctor_record, name='doctor'),
+    path('delete_doctor<int:pk>', views.delete_doctor, name='delete_doctor'),
+    path('add_doctor/', views.add_doctor, name='add_doctor'),
+    path('update_doctor/<int:pk>', views.update_doctor, name='update_doctor'),
 
 ]

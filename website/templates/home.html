@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
 
 
 
 {% if user.is_authenticated %}
 
-<h1> Home Page</h1>
+<h1>Newark Medical Associates Entity-Relationship Diagram</h1>
+</br>
+<img src="{% static 'images/erd-example.png' %}" alt="ERD">
 
 
 {% else %}
