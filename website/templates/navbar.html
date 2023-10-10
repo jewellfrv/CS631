@@ -7,9 +7,31 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           
+          <!-- Check if user is logged in before showing any management options-->
           {% if user.is_authenticated %}
 
+          <!--If on homepage, show each of the 3 management centers-->
           {% if request.path == "/"%} 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'patient_management' %}">Patient Management</a>
+            </li>
+          
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'patient_management' %}">In-Patient Management</a>
+            </li>
+          
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'patient_management' %}">Medical Staff Management</a>
+            </li>
+            
+            {% endif %}
+
+
+          <!--Showcase patient_management options-->
+          {% if request.path == "/patient_management/"%} 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'patient_table' %}">Patient Records</a>
+          </li>
 
           <li class="nav-item">
             <a class="nav-link" href="{% url 'patient_table' %}">Patient Records</a>
@@ -32,8 +54,17 @@
           </li>
           {% endif %}
 
+          <!--Showcase in-patient_management options-->
+          {% if request.path == "/in-patient_management/"%} 
+          {% endif %}
 
 
+          <!--Showcase patient_management options-->
+          {% if request.path == "/medical_staff_management/"%} 
+          {% endif %}
+
+
+          <!--show logout if logged in, as a last option across all url roots-->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
           </li>

@@ -8,6 +8,9 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('register/', views.register_user, name='register'),
 
+    # Patient Management URLs
+
+    path('patient_management/', views.see_patient_management, name='patient_management'),
 
     # Patient URLs
     path('patient_table/', views.see_patient_table, name='patient_table'),

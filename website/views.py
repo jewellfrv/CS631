@@ -52,14 +52,18 @@ def register_user(request):
 	return render(request, 'register.html', {'form':form})
 
 
+# Patient Management System
 
+def see_patient_management(request):
+	if request.user.is_authenticated:
+		return render(request, 'patient_managements/patient_management.html', {})
 
 # Patient view requests
 
 def see_patient_table(request):
 	if request.user.is_authenticated:
 		patients = Patient.objects.all()
-		return render(request, 'patients/patient_table.html', {'patients':patients})
+		return render(request, 'patient_managements/patients/patient_table.html', {'patients':patients})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
@@ -70,7 +74,7 @@ def patient_record(request, pk):
 	if request.user.is_authenticated:
 		# Look Up Patients
 		patient_record = Patient.objects.get(SSN=pk)
-		return render(request, 'patients/patient.html', {'patient_record':patient_record})
+		return render(request, 'patient_managements/patients/patient.html', {'patient_record':patient_record})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
@@ -96,7 +100,7 @@ def add_patient(request):
 				add_patient = form.save()
 				messages.success(request, "Patient Added...")
 				return redirect('patient_table')
-		return render(request, 'patients/add_patient.html', {'form':form})
+		return render(request, 'patient_managements/patients/add_patient.html', {'form':form})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
@@ -110,7 +114,7 @@ def update_patient(request, pk):
 			form.save()
 			messages.success(request, "Patient record updated.")
 			return redirect('patient_table')
-		return render(request, 'patients/update_patient.html', {'form':form})
+		return render(request, 'patient_managements/patients/update_patient.html', {'form':form})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
@@ -123,7 +127,7 @@ def update_patient(request, pk):
 def see_doctor_table(request):
 	if request.user.is_authenticated:
 		doctors = Doctor.objects.all()
-		return render(request, 'doctors/doctor_table.html', {'doctors':doctors})
+		return render(request, 'patient_managements/doctors/doctor_table.html', {'doctors':doctors})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
@@ -133,7 +137,7 @@ def doctor_record(request, pk):
 	if request.user.is_authenticated:
 		# Look Up Patients
 		doctor_record = Doctor.objects.get(id=pk)
-		return render(request, 'doctors/doctor.html', {'doctor_record':doctor_record})
+		return render(request, 'patient_managements/doctors/doctor.html', {'doctor_record':doctor_record})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
@@ -159,7 +163,7 @@ def add_doctor(request):
 				add_doctor = form.save()
 				messages.success(request, "Doctor Added...")
 				return redirect('doctor_table')
-		return render(request, 'doctors/add_doctor.html', {'form':form})
+		return render(request, 'patient_managements/doctors/add_doctor.html', {'form':form})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
@@ -173,7 +177,7 @@ def update_doctor(request, pk):
 			form.save()
 			messages.success(request, "Doctor record updated.")
 			return redirect('doctor_table')
-		return render(request, 'doctors/update_doctor.html', {'form':form})
+		return render(request, 'patient_managements/doctors/update_doctor.html', {'form':form})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
