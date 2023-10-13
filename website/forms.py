@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Patient, Doctor, realSpecialty
+from .models import Patient, Doctor, realSpecialty, Room, Bed, InPatient
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -92,3 +92,73 @@ class AddDoctorForm(forms.ModelForm):
 	class Meta:
 		model = Doctor
 		exclude = ("user",)
+
+
+# Create Add Room Form
+class RoomForm(forms.ModelForm):
+    room_number = forms.CharField(required=True,
+        widget=forms.widgets.TextInput(attrs={"placeholder": "Room Number", "class": "form-control"}),
+        label="Room Number"
+    )
+    floor = forms.IntegerField(required=True,
+        widget=forms.widgets.NumberInput(attrs={"placeholder": "Floor", "class": "form-control"}),
+        label="Floor"
+    )
+    wing = forms.CharField(required=True,
+        widget=forms.widgets.TextInput(attrs={"placeholder": "Wing", "class": "form-control"}),
+        label="Wing"
+    )
+    description = forms.CharField(
+        widget=forms.widgets.Textarea(attrs={"placeholder": "Description", "class": "form-control"}),
+        label="Description",
+        required=False  
+    )
+
+    class Meta:
+        model = Room
+        fields = ['room_number', 'floor', 'wing', 'description']
+
+# Create Add Bed Form
+class BedForm(forms.ModelForm):
+    room = forms.ModelChoiceField(queryset=Room.objects.all(), required=True,
+        widget=forms.widgets.Select(attrs={"placeholder": "Room", "class": "form-control"}),
+        label="Room"
+    )
+    bed_number = forms.IntegerField(required=True,
+        widget=forms.widgets.NumberInput(attrs={"placeholder": "Bed Number", "class": "form-control"}),
+        label="Bed Number"
+    )
+    is_occupied = forms.BooleanField(
+        required=False,
+        widget=forms.widgets.CheckboxInput(attrs={"class": "form-check-input"}),
+        label="Is Occupied"
+    )
+
+    class Meta:
+        model = Bed
+        fields = ['room', 'bed_number', 'is_occupied']
+
+
+# Create Add InPatient Form
+class InPatientForm(forms.ModelForm):
+    patient = forms.ModelChoiceField(queryset=Patient.objects.all(), required=True,
+        widget=forms.widgets.Select(attrs={"placeholder": "Patient", "class": "form-control"}),
+        label="Patient"
+    )
+    bed = forms.ModelChoiceField(queryset=Bed.objects.filter(is_occupied=False), required=True,
+        widget=forms.widgets.Select(attrs={"placeholder": "Bed", "class": "form-control"}),
+        label="Bed"
+    )
+    admission_date = forms.DateField(required=True,
+        widget=forms.widgets.DateInput(attrs={"placeholder": "Admission Date", "class": "form-control"}),
+        label="Admission Date"
+    )
+    discharge_date = forms.DateField(
+        required=False,
+        widget=forms.widgets.DateInput(attrs={"placeholder": "Discharge Date", "class": "form-control"}),
+        label="Discharge Date"
+    )
+
+    class Meta:
+        model = InPatient
+        fields = ['patient', 'bed', 'admission_date', 'discharge_date']

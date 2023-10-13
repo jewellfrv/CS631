@@ -46,8 +46,43 @@ class Doctor(models.Model):
 
 # In-Patient Management Models
 
+class Room(models.Model):
+    room_number = models.CharField(max_length=10, unique=True)
+    floor = models.PositiveIntegerField()
+    wing = models.CharField(max_length=10)
+    description = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return f"Room {self.room_number}, Floor {self.floor}"
 
+class Bed(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    bed_number = models.PositiveIntegerField()
+    is_occupied = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Bed {self.bed_number} in {self.room}"
+
+    class Meta:
+        unique_together = ('room', 'bed_number')
+
+class InPatient(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    bed = models.ForeignKey(Bed, on_delete=models.CASCADE)
+    admission_date = models.DateField()
+    discharge_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f"In-Patient: {self.patient} in Bed {self.bed}"
+
+    def save(self, *args, **kwargs):
+        # Save the InPatient object
+        super(InPatient, self).save(*args, **kwargs)
+
+        # Check if the discharge_date is set, and if so, mark the bed as unoccupied
+        if self.discharge_date is not None:
+            self.bed.is_occupied = False
+            self.bed.save()
 
 
 # Medical Staff Management Models

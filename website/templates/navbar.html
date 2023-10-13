@@ -17,7 +17,7 @@
             </li>
           
             <li class="nav-item">
-            <a class="nav-link" href="{% url 'patient_management' %}">In-Patient Management</a>
+            <a class="nav-link" href="{% url 'in_patient_management' %}">In-Patient Management</a>
             </li>
           
             <li class="nav-item">
@@ -29,37 +29,74 @@
 
           <!--Showcase patient_management options-->
           {% if request.path == "/patient_management/"%} 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'patient_table' %}">Patient Records</a>
-          </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'patient_table' %}">Patient Records</a>
+            </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'patient_table' %}">Patient Records</a>
-          </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'doctor_table' %}">Doctor Records</a>
+            </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'doctor_table' %}">Doctor Records</a>
-          </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'patient_table' %}">Medical History Records</a>
+            </li>
+
           {% endif %}
 
-          {% if request.path == "/patient_table/"%}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'add_patient' %}">Add Patient Record</a>
-          </li>
+          {% if "/patient_table/" in request.path%}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'patient_management' %}">Patient Management</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'add_patient' %}">Add Patient Record</a>
+            </li>
           {% endif %}
 
-          {% if request.path == "/doctor_table/"%}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'add_doctor' %}">Add Doctor Record</a>
-          </li>
+          {% if "/doctor_table/" in request.path%}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'patient_management' %}">Patient Management</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'add_doctor' %}">Add Doctor Record</a>
+            </li>
           {% endif %}
 
           <!--Showcase in-patient_management options-->
-          {% if request.path == "/in-patient_management/"%} 
+          {% if request.path == "/in_patient_management/"%} 
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'bed_table' %}">Bed Records</a>
+            </li>
+  
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'doctor_table' %}">Room Records</a>
+            </li>
+  
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'patient_table' %}">In-Patient Records</a>
+            </li>
           {% endif %}
 
+          {% if "/bed_table/" in request.path%}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'in_patient_management' %}">In-Patient Management</a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_bed' %}">Add Bed Record</a>
+          </li>
+        {% endif %}
 
-          <!--Showcase patient_management options-->
+        {% if "/room_table/" in request.path%}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'in_patient_management' %}">In-Patient Management</a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_bed' %}">Add Bed Record</a>
+          </li>
+        {% endif %}
+
+
+          <!--Showcase medical_staff_management options-->
           {% if request.path == "/medical_staff_management/"%} 
           {% endif %}
 

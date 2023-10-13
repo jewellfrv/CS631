@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% if user.is_authenticated %}
+
+
+<table class="table table-striped table-hover table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Room_Number</th>
+      <th scope="col">Floor</th>
+      <th scope="col">Wing</th>
+      <th scope="col">Descripition/th>
+      <th scope="col">ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+{% if rooms %}
+	{% for room in rooms %}
+		<tr>
+			<td>{{ room.room_number }}</td>
+            <td>{{ room.floor }}</td>
+            <td>{{ room.wing }}</td>
+            <td>{{ room.description}}</td>
+			<td><a href="{% url 'room' room.id %}">{{ room.id }}</a></td>
+		</tr>
+	{% endfor %}
+
+	
+	  </tbody>
+	</table>
+  {% endif %}
+  
+{% endif %}
+{% endblock %}
