@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm, AddPatientForm, AddDoctorForm, RoomForm, BedForm
+from .forms import SignUpForm, AddPatientForm, AddDoctorForm, AddIllnessForm, RoomForm, BedForm
 from .models import Patient, Doctor,Room, Bed, InPatient
 
 
@@ -194,6 +194,15 @@ def see_in_patient_management(request):
     else:
         messages.success(request, "This action requires the user to be logged in.")
         return redirect('home')
+	
+
+
+
+# Illness view requests
+
+
+
+
 
 # Room view requests
 

@@ -27,6 +27,15 @@ urlpatterns = [
     path('patient_management/add_doctor/', views.add_doctor, name='add_doctor'),
     path('patient_management/update_doctor/<int:pk>', views.update_doctor, name='update_doctor'),
 
+    # Illness URLs
+    #path('patient_management/illness_table/', views.see_illness_table, name='illness_table'),
+    #path('patient_management/illness<int:pk>', views.illness_record, name='illness'),
+    #path('patient_management/delete_illness<int:pk>', views.delete_illness, name='delete_illness'),
+    path('patient_management/add_illness/', views.add_illness, name='add_illness'),
+    #path('patient_management/update_illness/<int:pk>', views.update_illness, name='update_illness'),
+
+
+
 
 
     # In_Patient Management URLs
