@@ -21,7 +21,14 @@ class Patient(models.Model):
 
 	def __str__(self):
 		return(f"{self.first_name} {self.last_name}")
-	
+
+class Request (models.Model):
+	created at = models.DateTimeField(auto_now_add=True)
+	request_id = models.IntegerField(primary_key= True, validators=[MaxValueValidator(999999999)], unique=True)
+	patient_id =models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	doctor_id =models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	description = models.CharField(max_length=1000)
+	request_date = models.DateField()
 
 # Create list of applicable doctor specialtys.
 realSpecialty = [
