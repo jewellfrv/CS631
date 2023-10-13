@@ -5,17 +5,15 @@
 
 <div class="card">
   <div class="card-header"><strong>
-    	{{ bed_record.first_name }} 
-		{{ bed_record.last_name }}</strong>
+    	{{ bed_record.bed_number }} 
+		{{ bed_record.room }}</strong>
   </div>
   <div class="card-body">
 
 
 <p class="card-text">
-<strong>Date of Birth: </strong>{{ bed_record.DOB }}</p>
-
-<p class="card-text">
-<strong>Create At: </strong>{{ bed_record.created_at }}</p>
+  
+<strong>Status: </strong>{{ bed_record.is_occupied}}</p>
 
 <p class="card-text">
 <strong>ID: </strong>{{ bed_record.id }}</p>

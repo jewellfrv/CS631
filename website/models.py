@@ -41,6 +41,23 @@ class Doctor(models.Model):
 
 	def __str__(self):
 		return(f"{self.first_name} {self.last_name} {self.specialty}")
+     
+
+class MedicalHistory(models.model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	SSN = models.ForeignKey(Patient, on_delete=models.CASCADE)
+	illness_id = models.ForeignKey(Illness, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return(f"{self.patient_id}")
+
+class Illness(models.model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	illness_id =  models.IntegerField(primary_key= True, validators=[MaxValueValidator(999999999)], unique=True)
+	common_name = models.CharField(max_length=100)
+
+	def __str__(self):
+		return(f"{self.illness_id}")
 
 
 
