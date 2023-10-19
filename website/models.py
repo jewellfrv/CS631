@@ -21,7 +21,34 @@ class Patient(models.Model):
 
 	def __str__(self):
 		return(f"{self.first_name} {self.last_name}")
-	
+
+class Request (models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	request_id = models.IntegerField(primary_key= True, validators=[MaxValueValidator(999999999)], unique=True)
+	patient_id = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	doctor_id = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	description = models.CharField(max_length=1000)
+	request_date = models.DateField()
+
+	def __str__(self):
+		return(f"{self.request_id}")
+
+class Medical History(models.model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	patient_id = models.IntegerField(primary_key= True, validators=[MaxValueValidator(999999999)], unique=True)
+	illness_id = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+
+	def __str__(self):
+		return(f"{self.patient_id}")
+
+class Illness(models.model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	illness_id =  models.IntegerField(primary_key= True, validators=[MaxValueValidator(999999999)], unique=True)
+	common_name = models.CharField(max_length=100)
+
+	def __str__(self):
+		return(f"{self.illness_id}")
+		
 
 # Create list of applicable doctor specialtys.
 realSpecialty = [
