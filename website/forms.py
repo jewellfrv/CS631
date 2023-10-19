@@ -88,22 +88,66 @@ class AddDoctorForm(forms.ModelForm):
 							 choices=realSpecialty,
                              widget=forms.Select(attrs={"placeholder":"Specialty", "class":"form-control"}), 
 							 label="")
-
 	class Meta:
 		model = Doctor
 		exclude = ("user",)
 
 
 
+# Create Add Request Form
+class AddRequestForm(forms.ModelForm):
+	request_id = forms.IntegerField(required=True, 
+							  widget=forms.widgets.TextInput(attrs={"placeholder":"Request ID", "class":"form-control"}), 
+							  label="")
+	SSN = forms.IntegerField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"SSN", "class":"form-control"}), 
+							 label="")
+	doctor_id = forms.IntegerField(required=True, 
+					   widget=forms.widgets.DateInput(attrs={"placeholder":"Doctor ID", "class":"form-control"}),
+					   label="Year-Month-Day")	
+	description = forms.ChoiceField(required=True, 
+							 choices=realSpecialty,
+                             widget=forms.Select(attrs={"placeholder":"Description", "class":"form-control"}), 
+							 label="")
+	request_date = forms.DateField(required=True, 
+					   widget=forms.widgets.DateInput(attrs={"placeholder":"Request Date", "class":"form-control"}),
+					   label="Year-Month-Day")
+	
+	class Meta:
+		model = Request
+		exclude = ("user",)
+
+
+
+
+
 # Create Add Illness Form
 class AddIllnessForm(forms.ModelForm):
 	common_name = forms.CharField(required=True, 
-							  widget=forms.widgets.TextInput(attrs={"placeholder":"Commen Name", "class":"form-control"}), 
+							  widget=forms.widgets.TextInput(attrs={"placeholder":"Common Name", "class":"form-control"}), 
 							  label="")
 
 
 	class Meta:
 		model = Illness
+		exclude = ("user",)
+
+
+
+
+
+# Create Add Medical History Form
+class AddMedicalHistoryForm(forms.ModelForm):
+	SSN = forms.IntegerField(required=True, 
+							  widget=forms.widgets.TextInput(attrs={"placeholder":"SSN", "class":"form-control"}), 
+							  label="")
+	illness_id = forms.IntegerField(required=True, 
+							  widget=forms.widgets.TextInput(attrs={"placeholder":"Illness ID", "class":"form-control"}), 
+							  label="")
+
+
+	class Meta:
+		model = MedicalHistory
 		exclude = ("user",)
 
 
