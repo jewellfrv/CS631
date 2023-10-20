@@ -200,7 +200,177 @@ def see_in_patient_management(request):
 
 # Illness view requests
 
+def see_illness_table(request):
+	if request.user.is_authenticated:
+		illness = Illness.objects.all()
+		return render(request, 'patient_managements/illness_table.html', {'illness':illness})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
 
+
+def illness_record(request, pk):
+	if request.user.is_authenticated:
+		illness_record = Illness.objects.get(id=pk)
+		return render(request, 'patient_managements/illness.html', {'illness_record':illness_record})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def delete_illness(request, pk):
+	if request.user.is_authenticated:
+		delete_it = Illness.objects.get(id=pk)
+		delete_it.delete()
+		messages.success(request, "Illness record deleted")
+		return redirect('illness_table')
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def add_illness(request):
+	form = AddIllnessForm(request.POST or None)
+	if request.user.is_authenticated:
+		if request.method == "POST":
+			if form.is_valid():
+				add_illness = form.save()
+				messages.success(request, "Illness Added...")
+				return redirect('illness_table')
+		return render(request, 'patient_managements/add_illness.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def update_illness(request, pk):
+	if request.user.is_authenticated:
+		current_illness = Illness.objects.get(id=pk)
+		form = AddIllnessForm(request.POST or None, instance=current_illness)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Illness record updated.")
+			return redirect('illness_table')
+		return render(request, 'patient_managements/update_illness.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+# Medical History view requests
+
+def see_medicalhistory_table(request):
+	if request.user.is_authenticated:
+		Medical History = MedicalHistory.objects.all()
+		return render(request, 'patient_managements/medicalhistory_table.html', {'medical history':medical history})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+def medicalhistory_record(request, pk):
+	if request.user.is_authenticated:
+		medicalhistory_record = MedicalHistory.objects.get(id=pk)
+		return render(request, 'patient_managements/illness.html', {'medicalhistory_record':medicalhistory_record})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def delete_medicalhistory(request, pk):
+	if request.user.is_authenticated:
+		delete_it = MedicalHistory.objects.get(id=pk)
+		delete_it.delete()
+		messages.success(request, "Medical History record deleted")
+		return redirect('medicalhistory_table')
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def add_medicalhistory(request):
+	form = AddMedicalHistoryForm(request.POST or None)
+	if request.user.is_authenticated:
+		if request.method == "POST":
+			if form.is_valid():
+				add_medicalhistory = form.save()
+				messages.success(request, "Medical History Added...")
+				return redirect('medicalhistory_table')
+		return render(request, 'patient_managements/add_medicalhistory.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def update_medicalhistory(request, pk):
+	if request.user.is_authenticated:
+		current_medicalhistory = MedicalHistory.objects.get(id=pk)
+		form = AddMedicalHistoryForm(request.POST or None, instance=current_medicalhistory)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Medical History record updated.")
+			return redirect('medicalhistory_table')
+		return render(request, 'patient_managements/update_medicalhistory.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+# Request view requests
+
+def see_request_table(request):
+	if request.user.is_authenticated:
+		Request = Request.objects.all()
+		return render(request, 'patient_managements/request_table.html', {'request':request})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+def request_record(request, pk):
+	if request.user.is_authenticated:
+		request_record = Request.objects.get(id=pk)
+		return render(request, 'patient_managements/request.html', {'request_record':request_record})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def delete_request(request, pk):
+	if request.user.is_authenticated:
+		delete_it = Request.objects.get(id=pk)
+		delete_it.delete()
+		messages.success(request, "Request record deleted")
+		return redirect('request_table')
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def add_request(request):
+	form = AddRequestForm(request.POST or None)
+	if request.user.is_authenticated:
+		if request.method == "POST":
+			if form.is_valid():
+				add_request = form.save()
+				messages.success(request, "Request Added...")
+				return redirect('request_table')
+		return render(request, 'patient_managements/add_request.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def update_request(request, pk):
+	if request.user.is_authenticated:
+		current_request = Request.objects.get(id=pk)
+		form = AddRequestForm(request.POST or None, instance=current_request)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Request record updated.")
+			return redirect('request_table')
+		return render(request, 'patient_managements/update_request.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
 
 
 
