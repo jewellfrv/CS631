@@ -156,7 +156,7 @@ class BedForm(forms.ModelForm):
 
 
 # Create Add InPatient Form
-class InPatientForm(forms.ModelForm):
+class AddInPatientForm(forms.ModelForm):
     patient = forms.ModelChoiceField(queryset=Patient.objects.all(), required=True,
         widget=forms.widgets.Select(attrs={"placeholder": "Patient", "class": "form-control"}),
         label="Patient"

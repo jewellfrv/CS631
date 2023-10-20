@@ -31,7 +31,7 @@ urlpatterns = [
     #path('patient_management/illness_table/', views.see_illness_table, name='illness_table'),
     #path('patient_management/illness<int:pk>', views.illness_record, name='illness'),
     #path('patient_management/delete_illness<int:pk>', views.delete_illness, name='delete_illness'),
-    path('patient_management/add_illness/', views.add_illness, name='add_illness'),
+    #path('patient_management/add_illness/', views.add_illness, name='add_illness'),
     #path('patient_management/update_illness/<int:pk>', views.update_illness, name='update_illness'),
 
 
@@ -55,6 +55,14 @@ urlpatterns = [
     path('in_patient_management/delete_room<int:pk>', views.delete_room, name='delete_room'),
     path('in_patient_management/add_room/', views.add_room, name='add_room'),
     path('in_patient_management/update_room/<int:pk>', views.update_room, name='update_room'),
+
+    # InPatient URLs
+    path('in_patient_management/inpatient_table/', views.see_inpatient_table, name='inpatient_table'),
+    path('in_patient_management/inpatient<int:pk>', views.inpatient_record, name='inpatient'),
+    path('in_patient_management/delete_inpatient<int:pk>', views.delete_inpatient, name='delete_inpatient'),
+    path('in_patient_management/add_inpatient/', views.add_inpatient, name='add_inpatient'),
+    path('in_patient_management/update_inpatient/<int:pk>', views.update_inpatient, name='update_inpatient'),
+
 
 
 

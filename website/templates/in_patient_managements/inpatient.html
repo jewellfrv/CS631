@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<div class="card">
+  <div class="card-header"><strong>
+    	{{ inpatient_record.patient }} 
+		{{ inpatient_record.bed }}</strong>
+  </div>
+  <div class="card-body">
+
+
+<p class="card-text">
+  
+<strong>Admission Date: </strong>{{ inpatient_record.admission_date}}</p>
+<strong>Discharge Date: </strong>{{ inpatient_record.discharge_date}}</p>
+
+<p class="card-text">
+<strong>ID: </strong>{{ inpatient_record.id }}</p>
+    
+    
+  </div>
+</div>
+
+<br/><br/>
+
+<a href="{% url 'update_inpatient' inpatient_record.id %}" class="btn btn-primary">Update Record</a>
+
+<a href="{% url 'delete_inpatient' inpatient_record.id %}" class="btn btn-danger">Delete</a>
+
+<a href="{% url 'inpatient_table' %}" class="btn btn-secondary">Back</a>
+		
+
+{% endblock %}
+
+

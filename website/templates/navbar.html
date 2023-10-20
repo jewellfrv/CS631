@@ -69,11 +69,11 @@
             </li>
   
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'doctor_table' %}">Room Records</a>
+              <a class="nav-link" href="{% url 'room_table' %}">Room Records</a>
             </li>
   
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'patient_table' %}">In-Patient Records</a>
+              <a class="nav-link" href="{% url 'inpatient_table' %}">InPatient Records</a>
             </li>
           {% endif %}
 
@@ -91,9 +91,18 @@
             <a class="nav-link" href="{% url 'in_patient_management' %}">In-Patient Management</a>
             </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'add_bed' %}">Add Bed Record</a>
+            <a class="nav-link" href="{% url 'add_room' %}">Add Room Record</a>
           </li>
         {% endif %}
+
+        {% if "/inpatient_table/" in request.path%}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'in_patient_management' %}">In-Patient Management</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'add_inpatient' %}">Add InPatient Record</a>
+        </li>
+      {% endif %}
 
 
           <!--Showcase medical_staff_management options-->

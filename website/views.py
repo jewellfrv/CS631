@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm, AddPatientForm, AddDoctorForm, AddIllnessForm, RoomForm, BedForm
+from .forms import SignUpForm, AddPatientForm, AddDoctorForm, AddIllnessForm, RoomForm, BedForm, AddInPatientForm
 from .models import Patient, Doctor,Room, Bed, InPatient
 
 
@@ -312,3 +312,71 @@ def update_bed(request, pk):
     else:
         messages.success(request, "This action requires the user to be logged in.")
         return redirect('home')
+	
+
+
+# InPatient Views
+
+# InPatient Management System
+
+def see_inpatient_management(request):
+    if request.user.is_authenticated:
+        return render(request, 'patient_managements/inpatient_management.html', {})
+    else:
+        messages.success(request, "This action requires the user to be logged in.")
+        return redirect('home')
+
+# InPatient view requests
+
+def see_inpatient_table(request):
+    if request.user.is_authenticated:
+        inpatients = InPatient.objects.all()
+        return render(request, 'in_patient_managements/inpatient_table.html', {'inpatients': inpatients})
+    else:
+        messages.success(request, "This action requires the user to be logged in.")
+        return redirect('home')
+
+def inpatient_record(request, pk):
+    if request.user.is_authenticated:
+        inpatient_record = InPatient.objects.get(id=pk)
+        return render(request, 'in_patient_managements/inpatient.html', {'inpatient_record': inpatient_record})
+    else:
+        messages.success(request, "This action requires the user to be logged in.")
+        return redirect('home')
+
+def delete_inpatient(request, pk):
+    if request.user.is_authenticated:
+        delete_it = InPatient.objects.get(id=pk)
+        delete_it.delete()
+        messages.success(request, "InPatient record deleted")
+        return redirect('inpatient_table')
+    else:
+        messages.success(request, "This action requires the user to be logged in.")
+        return redirect('home')
+
+def add_inpatient(request):
+    form = AddInPatientForm(request.POST or None)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            if form.is_valid():
+                add_inpatient = form.save()
+                messages.success(request, "InPatient Added...")
+                return redirect('inpatient_table')
+        return render(request, 'in_patient_managements/add_inpatient.html', {'form': form})
+    else:
+        messages.success(request, "This action requires the user to be logged in.")
+        return redirect('home')
+
+def update_inpatient(request, pk):
+    if request.user.is_authenticated:
+        current_inpatient = InPatient.objects.get(id=pk)
+        form = AddInPatientForm(request.POST or None, instance=current_inpatient)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "InPatient record updated.")
+            return redirect('inpatient_table')
+        return render(request, 'in_patient_managements/update_inpatient.html', {'form': form})
+    else:
+        messages.success(request, "This action requires the user to be logged in.")
+        return redirect('home')
+

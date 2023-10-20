@@ -2,17 +2,17 @@
 {% block content %}
 
 <div class="col-md-6 offset-md-3">
-<h1>Room Form </h1>
+<h1>Medical History Form </h1>
 <br/>
 
-<form method="POST" action="{% url 'add_room' %}">
+<form method="POST" action="{% url 'add_medical_history' %}">
 	{% csrf_token %}
 
 	{{ form.as_p }}
 
 <br/>
   <button type="submit" class="btn btn-primary">Add Record</button>
-   <a href="{% url 'room_table' %}" class="btn btn-secondary">Back</a>
+   <a href="{% url 'medical_history_table' %}" class="btn btn-secondary">Back</a>
 
 </form>
 

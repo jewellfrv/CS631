@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
+from datetime import date
 
 
 
@@ -57,7 +58,7 @@ class MedicalHistory(models.Model):
 	illness_id = models.ForeignKey(Illness, on_delete=models.CASCADE)
 
 	def __str__(self):
-		return(f"Patient {self.SSN} with {self.illness_id}")
+		return(f"Patient {self.SSN} with ")
       
 
 class Request(models.Model):
@@ -106,13 +107,15 @@ class InPatient(models.Model):
         return f"In-Patient: {self.patient} in Bed {self.bed}"
 
     def save(self, *args, **kwargs):
+        today = date.today()
+        if self.discharge_date and self.discharge_date <= today:
+            self.bed.is_occupied = False
+        else:
+            self.bed.is_occupied = True
+        self.bed.save()
+
         # Save the InPatient object
         super(InPatient, self).save(*args, **kwargs)
-
-        # Check if the discharge_date is set, and if so, mark the bed as unoccupied
-        if self.discharge_date is not None:
-            self.bed.is_occupied = False
-            self.bed.save()
 
 
 # Medical Staff Management Models
