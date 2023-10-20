@@ -40,6 +40,9 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'patient_table' %}">Medical History Records</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'request_table' %}">Request Records</a>
+            </li>
 
           {% endif %}
 
@@ -60,6 +63,15 @@
               <a class="nav-link" href="{% url 'add_doctor' %}">Add Doctor Record</a>
             </li>
           {% endif %}
+
+          {% if "/request_table/" in request.path%}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'patient_management' %}">Patient Management</a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_request' %}">Add Request Record</a>
+          </li>
+        {% endif %}
 
           <!--Showcase in-patient_management options-->
           {% if request.path == "/in_patient_management/"%} 

@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Patient, Doctor, realSpecialty, Nurse, Room, Bed, InPatient, Illness
+from .models import Patient, Doctor, realSpecialty, Nurse, Room, Bed, InPatient, Request
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -95,16 +95,39 @@ class AddDoctorForm(forms.ModelForm):
 
 
 
-# Create Add Illness Form
-class AddIllnessForm(forms.ModelForm):
-	common_name = forms.CharField(required=True, 
-							  widget=forms.widgets.TextInput(attrs={"placeholder":"Commen Name", "class":"form-control"}), 
-							  label="")
+# Create Add Request Form
+class AddRequestForm(forms.ModelForm):
+    
+    patient = forms.ModelChoiceField(queryset=Patient.objects.all(), required=True,
+        widget=forms.widgets.Select(attrs={"placeholder": "Patient", "class": "form-control"}),
+        label="Patient"
+    )
+    doctor = forms.ModelChoiceField(
+    queryset=Doctor.objects.all(),
+    required=True,
+    widget=forms.widgets.Select(attrs={"placeholder": "Doctor", "class": "form-control"}),
+    label="Doctor",
+    to_field_name="id"  # This specifies which field to use as the value
+	)
 
+    treatment_type = forms.ChoiceField(
+        choices=[('General', 'General'), ('Surgery', 'Surgery')],
+        required=True,
+        widget=forms.widgets.Select(attrs={"placeholder": "Treatment Type", "class": "form-control"}),
+        label="Treatment Type"
+    )
+    description = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Description", "class":"form-control"}), 
+							 label="")
+    
+    request_date = forms.DateField(required=True, 
+					   widget=forms.widgets.DateInput(attrs={"placeholder":"Request Date", "class":"form-control"}),
+					   label="Year-Month-Day")
+    class Meta:
+        model = Request
+        exclude = ("user",)
+        fields = ['patient', 'doctor', 'treatment_type', 'description','request_date']
 
-	class Meta:
-		model = Illness
-		exclude = ("user",)
 
 
 
@@ -189,10 +212,16 @@ class AddInPatientForm(forms.ModelForm):
 	label="Nurse",
 	to_field_name="id"  
 	)
+    treatment_type = forms.ChoiceField(
+        choices=[('General', 'General'), ('Surgery', 'Surgery')],
+        required=True,
+        widget=forms.widgets.Select(attrs={"placeholder": "Treatment Type", "class": "form-control"}),
+        label="Treatment Type"
+    )
 
     def __init__(self, *args, **kwargs):
         super(AddInPatientForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = InPatient
-        fields = ['patient', 'bed', 'admission_date', 'discharge_date', 'doctor', 'nurse']
+        fields = ['patient', 'bed', 'admission_date', 'discharge_date', 'doctor', 'nurse', 'treatment_type']

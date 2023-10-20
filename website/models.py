@@ -21,7 +21,7 @@ class Patient(models.Model):
 	zipcode =  models.CharField(max_length=20)
 
 	def __str__(self):
-		return(f"{self.first_name} {self.last_name}/ ID: {self.SSN} ")
+		return(f"{self.first_name} {self.last_name}")
 	
 
 # Create list of applicable doctor specialtys.
@@ -63,23 +63,31 @@ class Illness(models.Model):
 
 class MedicalHistory(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
-	SSN = models.ForeignKey(Patient, on_delete=models.CASCADE)
-	illness_id = models.ForeignKey(Illness, on_delete=models.CASCADE)
+	patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+	illness = models.ForeignKey(Illness, on_delete=models.CASCADE)
 
 	def __str__(self):
-		return(f"Patient {self.SSN} with ")
+		return(f"Patient {self.patient} with {self.illness}")
       
 
 class Request(models.Model):
-	created_at = models.DateTimeField(auto_now_add=True)
-	request_id = models.IntegerField(primary_key= True)
-	SSN = models.ForeignKey(Patient, on_delete=models.CASCADE)
-	doctor_id = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-	description = models.CharField(max_length=1000)
-	request_date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
+    description = models.CharField(max_length=1000)
+    treatment_type = models.CharField(max_length=20, choices=[("General", "General"),
+                                                              ("Surgery", "Surgery")], default='General')
+    request_date = models.DateField()
+    def __str__(self):
+        return(f"{self.id}")
+    
+    def save(self, *args, **kwargs):
+        today = date.today()
+        if self.request_date <= today:
+            self.description = "Not Valid"
 
-	def __str__(self):
-		return(f"{self.request_id}")
+        # Save the InPatient object
+        super(Request, self).save(*args, **kwargs)
 
 
 
@@ -105,6 +113,15 @@ class Bed(models.Model):
 
     class Meta:
         unique_together = ('room', 'bed_number')
+    
+    def update_occupation_status(self):
+        # Check if the bed is occupied in any InPatient record
+        is_occupied = InPatient.objects.filter(bed=self, discharge_date__gte=date.today()).exists()
+
+        # Update the is_occupied field
+        self.is_occupied = is_occupied
+        self.save()
+        
 
 class InPatient(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -113,6 +130,9 @@ class InPatient(models.Model):
     discharge_date = models.DateField(null=True, blank=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
     nurse = models.ForeignKey(Nurse, on_delete=models.SET_NULL,null=True,blank=True)
+    treatment_type = models.CharField(max_length=20, choices=[("General", "General"),
+                                                              ("Surgery", "Surgery")], default='General')
+
  
 
 

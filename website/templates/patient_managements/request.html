@@ -1,0 +1,44 @@
+<
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<div class="card">
+    <div class="card-header"><strong>
+          {{ request_record.treatment_type }}</strong>
+    </div>
+    <div class="card-body">
+  
+  
+  <p class="card-text">
+  <strong>For: </strong>{{ request_record.patient }}</p>
+  <strong>Assigned Doctor: </strong>{{ request_record.doctor }}</p>
+  <strong>Description: </strong>{{ request_record.description }}</p>
+  <strong>Request Date: </strong>{{ request_record.request_date }}</p>
+  
+  
+  
+  <p class="card-text">
+  <strong>Create At: </strong>{{ request_record.created_at }}</p>
+  
+  <p class="card-text">
+  <strong>ID: </strong>{{ request_record.id }}</p>
+      
+      
+    </div>
+  </div>
+  
+  <br/><br/>
+  
+  <a href="{% url 'update_request' request_record.id %}" class="btn btn-primary">Update Record</a>
+  
+  <a href="{% url 'delete_request' request_record.id %}" class="btn btn-danger">Delete</a>
+  
+  <a href="{% url 'request_table' %}" class="btn btn-secondary">Back</a>
+          
+  
+  {% endblock %}
+
+
+

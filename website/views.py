@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm, AddPatientForm, AddDoctorForm, AddIllnessForm, RoomForm, BedForm, AddInPatientForm
-from .models import Patient, Doctor,Room, Bed, InPatient
+from .forms import SignUpForm, AddPatientForm, AddDoctorForm, AddRequestForm, RoomForm, BedForm, AddInPatientForm
+from .models import Patient, Doctor,Room, Bed, InPatient, Request
 
 
 
@@ -198,9 +198,62 @@ def see_in_patient_management(request):
 
 
 
-# Illness view requests
+# Request view requests
+
+def see_request_table(request):
+	if request.user.is_authenticated:
+		requests = Request.objects.all()
+		return render(request, 'patient_managements/request_table.html', {'requests':requests})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+def request_record(request, pk):
+	if request.user.is_authenticated:
+		request_record = Request.objects.get(id=pk)
+		return render(request, 'patient_managements/request.html', {'request_record':request_record})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
 
 
+def delete_request(request, pk):
+	if request.user.is_authenticated:
+		delete_it = Request.objects.get(id=pk)
+		delete_it.delete()
+		messages.success(request, "Request record deleted")
+		return redirect('request_table')
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def add_request(request):
+	form = AddRequestForm(request.POST or None)
+	if request.user.is_authenticated:
+		if request.method == "POST":
+			if form.is_valid():
+				add_request = form.save()
+				messages.success(request, "Request Added...")
+				return redirect('request_table')
+		return render(request, 'patient_managements/add_request.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def update_request(request, pk):
+	if request.user.is_authenticated:
+		current_request = Request.objects.get(id=pk)
+		form = AddRequestForm(request.POST or None, instance=current_request)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Request record updated.")
+			return redirect('request_table')
+		return render(request, 'patient_managements/update_request.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
 
 
 
