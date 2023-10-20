@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Patient, Doctor, realSpecialty, Room, Bed, InPatient, Illness
+from .models import Patient, Doctor, realSpecialty, Nurse, Room, Bed, InPatient, Illness
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -174,7 +174,25 @@ class AddInPatientForm(forms.ModelForm):
         widget=forms.widgets.DateInput(attrs={"placeholder": "Discharge Date", "class": "form-control"}),
         label="Discharge Date"
     )
+    
+    doctor = forms.ModelChoiceField(
+    queryset=Doctor.objects.all(),
+    required=True,
+    widget=forms.widgets.Select(attrs={"placeholder": "Doctor", "class": "form-control"}),
+    label="Doctor",
+    to_field_name="id"  # This specifies which field to use as the value
+	)
+    nurse = forms.ModelChoiceField(
+	queryset=Nurse.objects.all(),
+	required=True,
+	widget=forms.widgets.Select(attrs={"placeholder": "Nurse", "class": "form-control"}),
+	label="Nurse",
+	to_field_name="id"  
+	)
+
+    def __init__(self, *args, **kwargs):
+        super(AddInPatientForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = InPatient
-        fields = ['patient', 'bed', 'admission_date', 'discharge_date']
+        fields = ['patient', 'bed', 'admission_date', 'discharge_date', 'doctor', 'nurse']

@@ -21,7 +21,7 @@ class Patient(models.Model):
 	zipcode =  models.CharField(max_length=20)
 
 	def __str__(self):
-		return(f"{self.first_name} {self.last_name}")
+		return(f"{self.first_name} {self.last_name}/ ID: {self.SSN} ")
 	
 
 # Create list of applicable doctor specialtys.
@@ -41,8 +41,17 @@ class Doctor(models.Model):
 	specialty = models.CharField(max_length=100, choices=realSpecialty)
 
 	def __str__(self):
-		return(f"{self.first_name} {self.last_name} {self.specialty}")
-     
+		return(f"Dr.{self.first_name} {self.last_name}/ Specialty: {self.specialty} / ID: {self.id} ")
+
+class Nurse(models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	first_name = models.CharField(max_length=50)
+	last_name =  models.CharField(max_length=50)
+	DOB = models.DateField()
+
+	def __str__(self):
+		return(f"Nurse {self.first_name} {self.last_name} / ID: {self.id} ")
+          
 
 class Illness(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -102,6 +111,10 @@ class InPatient(models.Model):
     bed = models.ForeignKey(Bed, on_delete=models.CASCADE)
     admission_date = models.DateField()
     discharge_date = models.DateField(null=True, blank=True)
+    doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
+    nurse = models.ForeignKey(Nurse, on_delete=models.SET_NULL,null=True,blank=True)
+ 
+
 
     def __str__(self):
         return f"In-Patient: {self.patient} in Bed {self.bed}"
