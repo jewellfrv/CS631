@@ -27,6 +27,15 @@ urlpatterns = [
     path('patient_management/add_doctor/', views.add_doctor, name='add_doctor'),
     path('patient_management/update_doctor/<int:pk>', views.update_doctor, name='update_doctor'),
 
+<<<<<<< HEAD
+=======
+    # Illness URLs
+    path('patient_management/illness_table/', views.see_illness_table, name='illness_table'),
+    path('patient_management/illness<int:pk>', views.illness_record, name='illness'),
+    path('patient_management/delete_illness<int:pk>', views.delete_illness, name='delete_illness'),
+    path('patient_management/add_illness/', views.add_illness, name='add_illness'),
+    path('patient_management/update_illness/<int:pk>', views.update_illness, name='update_illness'),
+>>>>>>> refs/remotes/origin/main
 
     # Request URLs
     path('patient_management/request_table/', views.see_request_table, name='request_table'),
@@ -35,9 +44,22 @@ urlpatterns = [
     path('patient_management/add_request/', views.add_request, name='add_request'),
     path('patient_management/update_request/<int:pk>', views.update_request, name='update_request'),
 
+    # Medical History URLs
+    path('patient_management/medicalhistory_table/', views.see_medicalhistory_table, name='medicalhistory_table'),
+    path('patient_management/medicalhistory<int:pk>', views.medicalhistory_record, name='medicalhistory'),
+    path('patient_management/delete_medicalhistory<int:pk>', views.delete_medicalhistory, name='delete_medicalhistory'),
+    path('patient_management/add_medicalhistory/', views.add_illness, name='add_medicalhistory'),
+    path('patient_management/update_medicalhistory/<int:pk>', views.update_illness, name='update_medicalhistory'),
 
 
+    # Request URLs
+    path('patient_management/request_table/', views.see_request_table, name='request_table'),
+    path('patient_management/request<int:pk>', views.request_record, name='request'),
+    path('patient_management/delete_request<int:pk>', views.delete_request, name='delete_request'),
+    path('patient_management/add_request/', views.add_request, name='add_request'),
+    path('patient_management/update_request/<int:pk>', views.update_request, name='update_request'),
 
+    
     # In_Patient Management URLs
     path('in_patient_management/', views.see_in_patient_management, name='in_patient_management'),
 
