@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm, AddPatientForm, AddDoctorForm, AddRequestForm, RoomForm, BedForm, AddInPatientForm
-from .models import Patient, Doctor,Room, Bed, InPatient, Request
+from .forms import SignUpForm, AddPatientForm, AddPhysicianForm, AddSurgeonForm, AddNurseForm, AddMedicationForm, AddRequestForm, RoomForm, BedForm, AddInPatientForm
+from .models import Patient, Physician, Surgeon, Nurse, Medication, Room, Bed, InPatient, Request
 
 
 
@@ -125,66 +125,257 @@ def update_patient(request, pk):
 
 
 
-# Doctor view requests
+# physician view requests
 
-def see_doctor_table(request):
+def see_physician_table(request):
 	if request.user.is_authenticated:
-		doctors = Doctor.objects.all()
-		return render(request, 'patient_managements/doctor_table.html', {'doctors':doctors})
+		physicians = Physician.objects.all()
+		return render(request, 'patient_managements/physician_table.html', {'physicians':physicians})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
 
 
-def doctor_record(request, pk):
+def physician_record(request, pk):
 	if request.user.is_authenticated:
 		# Look Up Patients
-		doctor_record = Doctor.objects.get(id=pk)
-		return render(request, 'patient_managements/doctor.html', {'doctor_record':doctor_record})
+		physician_record = Physician.objects.get(id=pk)
+		return render(request, 'patient_managements/physician.html', {'physician_record':physician_record})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
 
 
 
-def delete_doctor(request, pk):
+def delete_physician(request, pk):
 	if request.user.is_authenticated:
-		delete_it = Doctor.objects.get(id=pk)
+		delete_it = Physician.objects.get(id=pk)
 		delete_it.delete()
-		messages.success(request, "Doctor record deleted")
-		return redirect('doctor_table')
+		messages.success(request, "Physician record deleted")
+		return redirect('physician_table')
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
 
 
-def add_doctor(request):
-	form = AddDoctorForm(request.POST or None)
+def add_physician(request):
+	form = AddPhysicianForm(request.POST or None)
 	if request.user.is_authenticated:
 		if request.method == "POST":
 			if form.is_valid():
-				add_doctor = form.save()
-				messages.success(request, "Doctor Added...")
-				return redirect('doctor_table')
-		return render(request, 'patient_managements/add_doctor.html', {'form':form})
+				add_physician = form.save()
+				messages.success(request, "Physician Added...")
+				return redirect('physician_table')
+		return render(request, 'patient_managements/add_physician.html', {'form':form})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
 
 
-def update_doctor(request, pk):
+def update_physician(request, pk):
 	if request.user.is_authenticated:
-		current_doctor = Doctor.objects.get(id=pk)
-		form = AddDoctorForm(request.POST or None, instance=current_doctor)
+		current_physician = Physician.objects.get(id=pk)
+		form = AddPhysicianForm(request.POST or None, instance=current_physician)
 		if form.is_valid():
 			form.save()
-			messages.success(request, "Doctor record updated.")
-			return redirect('doctor_table')
-		return render(request, 'patient_managements/update_doctor.html', {'form':form})
+			messages.success(request, "Physician record updated.")
+			return redirect('physician_table')
+		return render(request, 'patient_managements/update_physician.html', {'form':form})
 	else:
 		messages.success(request, "This action requres user to be logged in.")
 		return redirect('home')
 	
+
+
+
+# surgeon view requests
+
+def see_surgeon_table(request):
+	if request.user.is_authenticated:
+		surgeons = Surgeon.objects.all()
+		return render(request, 'patient_managements/surgeon_table.html', {'surgeons':surgeons})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def surgeon_record(request, pk):
+	if request.user.is_authenticated:
+		# Look Up Patients
+		surgeon_record = Surgeon.objects.get(id=pk)
+		return render(request, 'patient_managements/surgeon.html', {'surgeon_record':surgeon_record})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+
+def delete_surgeon(request, pk):
+	if request.user.is_authenticated:
+		delete_it = Surgeons.objects.get(id=pk)
+		delete_it.delete()
+		messages.success(request, "Surgeon record deleted")
+		return redirect('physician_table')
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def add_surgeon(request):
+	form = AddSurgeonForm(request.POST or None)
+	if request.user.is_authenticated:
+		if request.method == "POST":
+			if form.is_valid():
+				add_surgeon = form.save()
+				messages.success(request, "Surgeon Added...")
+				return redirect('surgeon_table')
+		return render(request, 'patient_managements/add_surgeon.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def update_surgeon(request, pk):
+	if request.user.is_authenticated:
+		current_surgeon = Suregeon.objects.get(id=pk)
+		form = AddSurgeonForm(request.POST or None, instance=current_surgeon)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Surgeon record updated.")
+			return redirect('suregeon_table')
+		return render(request, 'patient_managements/update_surgeon.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+
+# nurse view requests
+
+def see_nurse_table(request):
+	if request.user.is_authenticated:
+		nurses = Nurse.objects.all()
+		return render(request, 'patient_managements/nurse_table.html', {'nurses':nurses})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def nurse_record(request, pk):
+	if request.user.is_authenticated:
+		# Look Up Patients
+		nurse_record = Nurse.objects.get(id=pk)
+		return render(request, 'patient_managements/nurse.html', {'nurse_record':nurse_record})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+
+def delete_nurse(request, pk):
+	if request.user.is_authenticated:
+		delete_it = Nurse.objects.get(id=pk)
+		delete_it.delete()
+		messages.success(request, "Nurse record deleted")
+		return redirect('nurse_table')
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def add_nurse(request):
+	form = AddNurseForm(request.POST or None)
+	if request.user.is_authenticated:
+		if request.method == "POST":
+			if form.is_valid():
+				add_nurse = form.save()
+				messages.success(request, "Nurse Added...")
+				return redirect('nurse_table')
+		return render(request, 'patient_managements/add_nurse.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def update_nurse(request, pk):
+	if request.user.is_authenticated:
+		current_nurse = Nurse.objects.get(id=pk)
+		form = AddNurseForm(request.POST or None, instance=current_nurse)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Nurse record updated.")
+			return redirect('nurse_table')
+		return render(request, 'patient_managements/update_nurse.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+
+
+# medication view requests
+
+def see_medication_table(request):
+	if request.user.is_authenticated:
+		medicationss = Medication.objects.all()
+		return render(request, 'patient_managements/medication_table.html', {'medications':medications})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def medication_record(request, pk):
+	if request.user.is_authenticated:
+		# Look Up Patients
+		medication_record = Medication.objects.get(id=pk)
+		return render(request, 'patient_managements/medication.html', {'medication_record':medication_record})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+
+def delete_medication(request, pk):
+	if request.user.is_authenticated:
+		delete_it = Medication.objects.get(id=pk)
+		delete_it.delete()
+		messages.success(request, "Medication record deleted")
+		return redirect('medication_table')
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def add_medication(request):
+	form = AddMedicationForm(request.POST or None)
+	if request.user.is_authenticated:
+		if request.method == "POST":
+			if form.is_valid():
+				add_mediciation = form.save()
+				messages.success(request, "Medication Added...")
+				return redirect('medication_table')
+		return render(request, 'patient_managements/add_medication.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+def update_medication(request, pk):
+	if request.user.is_authenticated:
+		current_medication = Medication.objects.get(id=pk)
+		form = AddMedicationForm(request.POST or None, instance=current_medication)
+		if form.is_valid():
+			form.save()
+			messages.success(request, "Medication record updated.")
+			return redirect('medication_table')
+		return render(request, 'patient_managements/update_medication.html', {'form':form})
+	else:
+		messages.success(request, "This action requres user to be logged in.")
+		return redirect('home')
+
+
+
+
 
 	# In-Patient Management System
 

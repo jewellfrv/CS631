@@ -27,7 +27,7 @@ class Request (models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	request_id = models.IntegerField(primary_key= True, validators=[MaxValueValidator(999999999)], unique=True)
 	patient_id = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
-	doctor_id = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	emploment_number = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
 	description = models.CharField(max_length=1000)
 	request_date = models.DateField()
 
@@ -51,35 +51,6 @@ class Illness(models.model):
 		return(f"{self.illness_id}")
 		
 
-# Create list of applicable doctor specialtys.
-realSpecialty = [
-	("General","General"),
-	("Pediatrics","Pediatrics"),
-	("Dermatology", "Dermatology"),
-	("Surgery", "Surgery"),
-	("Oncology", "Oncology"),
-]
-
-class Doctor(models.Model):
-	created_at = models.DateTimeField(auto_now_add=True)
-	first_name = models.CharField(max_length=50)
-	last_name =  models.CharField(max_length=50)
-	DOB = models.DateField()
-	specialty = models.CharField(max_length=100, choices=realSpecialty)
-
-	def __str__(self):
-		return(f"Dr.{self.first_name} {self.last_name}/ Specialty: {self.specialty} / ID: {self.id} ")
-
-class Nurse(models.Model):
-	created_at = models.DateTimeField(auto_now_add=True)
-	first_name = models.CharField(max_length=50)
-	last_name =  models.CharField(max_length=50)
-	DOB = models.DateField()
-
-	def __str__(self):
-		return(f"Nurse {self.first_name} {self.last_name} / ID: {self.id} ")
-          
-
 class Illness(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	common_name = models.CharField(max_length=100)
@@ -100,7 +71,7 @@ class MedicalHistory(models.Model):
 class Request(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
+    physician = models.ForeignKey(Physician, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.CharField(max_length=1000)
     treatment_type = models.CharField(max_length=20, choices=[("General", "General"),
                                                               ("Surgery", "Surgery")], default='General')
@@ -116,7 +87,22 @@ class Request(models.Model):
         # Save the InPatient object
         super(Request, self).save(*args, **kwargs)
 
+class Medication (models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	medication_id = models.IntegerField(primary_key= True, validators=[MaxValueValidator(999999999)], unique=True)
+	patient_id = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	quantity_on_hand = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	quantity_on_order = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	unit_cost = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	YTD_usage = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	physician = models.ForeignKey(Physician, on_delete=models.SET_NULL, null=True, blank=True)
+	description = models.CharField(max_length=1000)
+	name = models.CharField(max_length=100)
+	severity = models.CharField(max_length=100)
+	prescription_date = models.DateField()
 
+	def __str__(self):
+		return(f"{self.medication_id}")
 
 
 # In-Patient Management Models
@@ -155,7 +141,7 @@ class InPatient(models.Model):
     bed = models.ForeignKey(Bed, on_delete=models.CASCADE)
     admission_date = models.DateField()
     discharge_date = models.DateField(null=True, blank=True)
-    doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True)
+    physician = models.ForeignKey(Physician, on_delete=models.SET_NULL, null=True, blank=True)
     nurse = models.ForeignKey(Nurse, on_delete=models.SET_NULL,null=True,blank=True)
     treatment_type = models.CharField(max_length=20, choices=[("General", "General"),
                                                               ("Surgery", "Surgery")], default='General')
@@ -179,3 +165,123 @@ class InPatient(models.Model):
 
 
 # Medical Staff Management Models
+
+class Physician(models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	first_name = models.CharField(max_length=50)
+	last_name =  models.CharField(max_length=50)
+	DOB = models.DateField()
+	gender =  models.CharField(max_length=50)
+	phone = models.CharField(max_length=15)
+	address =  models.CharField(max_length=100)
+	city =  models.CharField(max_length=50)
+	state =  models.CharField(max_length=2)
+	zipcode =  models.CharField(max_length=20)
+	SSN = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	employment_number = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+
+	specialty = models.CharField(max_length=100, choices=realSpecialty)
+
+	def __str__(self):
+		return(f"Dr.{self.first_name} {self.last_name}/ Specialty: {self.specialty} / ID: {self.id} ")
+
+class Nurse(models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	first_name = models.CharField(max_length=50)
+	last_name =  models.CharField(max_length=50)
+	DOB = models.DateField()
+	gender =  models.CharField(max_length=50)
+	phone = models.CharField(max_length=15)
+	address =  models.CharField(max_length=100)
+	city =  models.CharField(max_length=50)
+	state =  models.CharField(max_length=2)
+	zipcode =  models.CharField(max_length=20)
+	SSN = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	employment_number = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+
+	specialty = models.CharField(max_length=100, choices=realSpecialty)
+
+	def __str__(self):
+		return(f"Nurse {self.first_name} {self.last_name} / ID: {self.id} ")
+
+
+class Surgeon(models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	first_name = models.CharField(max_length=50)
+	last_name =  models.CharField(max_length=50)
+	DOB = models.DateField()
+	gender =  models.CharField(max_length=50)
+	phone = models.CharField(max_length=15)
+	address =  models.CharField(max_length=100)
+	city =  models.CharField(max_length=50)
+	state =  models.CharField(max_length=2)
+	zipcode =  models.CharField(max_length=20)
+	Contract =  models.CharField(max_length=50)
+	SSN = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	specialty = models.CharField(max_length=100, choices=realSpecialty)
+	employment_number = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+
+	specialty = models.CharField(max_length=100, choices=realSpecialty)
+
+	def __str__(self):
+		return(f"Surgeon.{self.first_name} {self.last_name}/ Specialty: {self.specialty} / ID: {self.id} ")
+
+
+class Receptionist(models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	first_name = models.CharField(max_length=50)
+	last_name =  models.CharField(max_length=50)
+	DOB = models.DateField()
+	gender =  models.CharField(max_length=50)
+	phone = models.CharField(max_length=15)
+	address =  models.CharField(max_length=100)
+	city =  models.CharField(max_length=50)
+	state =  models.CharField(max_length=2)
+	zipcode =  models.CharField(max_length=20)
+	SSN = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	employment_number = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+
+	def __str__(self):
+		return(f"Receptionist {self.first_name} {self.last_name} / ID: {self.id} ")
+
+
+class Administrative_Associate (models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	first_name = models.CharField(max_length=50)
+	last_name =  models.CharField(max_length=50)
+	DOB = models.DateField()
+	gender =  models.CharField(max_length=50)
+	phone = models.CharField(max_length=15)
+	address =  models.CharField(max_length=100)
+	city =  models.CharField(max_length=50)
+	state =  models.CharField(max_length=2)
+	zipcode =  models.CharField(max_length=20)
+	SSN = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	employment_number = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+
+	def __str__(self):
+		return(f"Administrative_Associate {self.first_name} {self.last_name} / ID: {self.id} ")
+
+
+class Salary (models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	first_name = models.CharField(max_length=50)
+	last_name =  models.CharField(max_length=50)
+	Type =  models.CharField(max_length=50)
+	position = models.CharField(max_length=50
+	amount = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+	employment_number = models.IntegerField (validators=[MaxValueValidator (999999999)], unique=True)
+
+	def __str__(self):
+		return(f"Salary {self.first_name} {self.last_name} / ID: {self.id} ")
+
+
+# Create list of applicable Physician specialtys.
+
+realSpecialty = [
+	("General","General"),
+	("Pediatrics","Pediatrics"),
+	("Gynocology", "Gynocology"),
+	("Opthamology", "Opthamology"),
+	("Oncology", "Oncology"),
+]	

@@ -6,7 +6,9 @@ from .models import Patient,Doctor,Nurse,MedicalHistory, Illness,Request,Bed,Roo
 
 admin.site.register(Patient)
 
-admin.site.register(Doctor)
+admin.site.register(Physician)
+
+admin.site.register(Surgeon)
 
 admin.site.register(Nurse)
 
@@ -16,6 +18,7 @@ admin.site.register(MedicalHistory)
 
 admin.site.register(Request)
 
+admin.site.register(Medication)
 
 admin.site.register(Bed)
 

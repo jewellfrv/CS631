@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Patient, Doctor, realSpecialty, Nurse, Room, Bed, InPatient, Request
+from .models import Patient, Physician, Surgeon, Medication, realSpecialty, Nurse, Room, Bed, InPatient, Request
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))
@@ -73,74 +73,245 @@ class AddPatientForm(forms.ModelForm):
 		exclude = ("user",)
 		
 
-# Create Add Doctor Form
-class AddDoctorForm(forms.ModelForm):
+# Create Add Physician Form
+class AddPhysicianForm(forms.ModelForm):
 	first_name = forms.CharField(required=True, 
 							  widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), 
 							  label="")
 	last_name = forms.CharField(required=True, 
 							 widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), 
 							 label="")
+	gender = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Gender", "class":"form-control"}), 
+							 label="")
+	phone = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), 
+							 label="")
+	address = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Address", "class":"form-control"}), 
+							 label="")
+	city = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"City", "class":"form-control"}), 
+							 label="")
+	state = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"State", "class":"form-control"}), 
+							 label="")
+	zipcode = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Zipcode", "class":"form-control"}), 
+							 label="")						 						 						 						 						 						 
 	DOB = forms.DateField(required=True, 
 					   widget=forms.widgets.DateInput(attrs={"placeholder":"Date of Birth", "class":"form-control"}),
-					   label="Year-Month-Day")	
+					   label="Year-Month-Day")
+	SSN = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"SSN", "class":"form-control"}), 
+						 label="")
+	employment_number = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Employment Number", "class":"form-control"}), 
+						 label="")						 					   	
 	specialty = forms.ChoiceField(required=True, 
 							 choices=realSpecialty,
                              widget=forms.Select(attrs={"placeholder":"Specialty", "class":"form-control"}), 
 							 label="")
 	class Meta:
-		model = Doctor
+		model = Physician
 		exclude = ("user",)
+
+
+
+# Create Add Surgeon Form
+class AddSurgeonForm(forms.ModelForm):
+	first_name = forms.CharField(required=True, 
+							  widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), 
+							  label="")
+	last_name = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), 
+							 label="")
+	gender = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Gender", "class":"form-control"}), 
+							 label="")
+	phone = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), 
+							 label="")
+	address = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Address", "class":"form-control"}), 
+							 label="")
+	city = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"City", "class":"form-control"}), 
+							 label="")
+	state = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"State", "class":"form-control"}), 
+							 label="")
+	zipcode = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Zipcode", "class":"form-control"}), 
+							 label="")
+	contract = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Contract", "class":"form-control"}), 
+							 label="")						 						 						 						 						 						 						 
+	DOB = forms.DateField(required=True, 
+					   widget=forms.widgets.DateInput(attrs={"placeholder":"Date of Birth", "class":"form-control"}),
+					   label="Year-Month-Day")
+	SSN = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"SSN", "class":"form-control"}), 
+						 label="")
+	employment_number = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Employment Number", "class":"form-control"}), 
+						 label="")						 					   	
+	specialty = forms.ChoiceField(required=True, 
+							 choices=realSpecialty,
+                             widget=forms.Select(attrs={"placeholder":"Specialty", "class":"form-control"}), 
+							 label="")
+	class Meta:
+		model = Surgeon
+		exclude = ("user",)
+
+
+
+# Create Add Nurse Form
+class AddNurseForm(forms.ModelForm):
+	first_name = forms.CharField(required=True, 
+							  widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), 
+							  label="")
+	last_name = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), 
+							 label="")
+	gender = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Gender", "class":"form-control"}), 
+							 label="")
+	phone = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), 
+							 label="")
+	address = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Address", "class":"form-control"}), 
+							 label="")
+	city = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"City", "class":"form-control"}), 
+							 label="")
+	state = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"State", "class":"form-control"}), 
+							 label="")
+	zipcode = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Zipcode", "class":"form-control"}), 
+							 label="")						 						 						 						 						 						 
+	DOB = forms.DateField(required=True, 
+					   widget=forms.widgets.DateInput(attrs={"placeholder":"Date of Birth", "class":"form-control"}),
+					   label="Year-Month-Day")
+	SSN = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"SSN", "class":"form-control"}), 
+						 label="")
+	employment_number = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Employment Number", "class":"form-control"}), 
+						 label="")						 					   	
+	specialty = forms.ChoiceField(required=True, 
+							 choices=realSpecialty,
+                             widget=forms.Select(attrs={"placeholder":"Specialty", "class":"form-control"}), 
+							 label="")
+	class Meta:
+		model = Nurse
+		exclude = ("user",)
+
+
+# Create Add Receptionist Form
+class AddReceptionistForm(forms.ModelForm):
+	first_name = forms.CharField(required=True, 
+							  widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), 
+							  label="")
+	last_name = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), 
+							 label="")
+	gender = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Gender", "class":"form-control"}), 
+							 label="")
+	phone = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), 
+							 label="")
+	address = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Address", "class":"form-control"}), 
+							 label="")
+	city = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"City", "class":"form-control"}), 
+							 label="")
+	state = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"State", "class":"form-control"}), 
+							 label="")
+	zipcode = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Zipcode", "class":"form-control"}), 
+							 label="")						 						 						 						 						 						 
+	DOB = forms.DateField(required=True, 
+					   widget=forms.widgets.DateInput(attrs={"placeholder":"Date of Birth", "class":"form-control"}),
+					   label="Year-Month-Day")
+	SSN = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"SSN", "class":"form-control"}), 
+						 label="")
+	employment_number = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Employment Number", "class":"form-control"}), 
+						 label="")						 					   	
+	
+	
+	class Meta:
+		model = Receptionist
+		exclude = ("user",)
+
+
+# Create Add Administrative_Associate Form
+class AddAdministrative_AssociateForm(forms.ModelForm):
+	first_name = forms.CharField(required=True, 
+							  widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), 
+							  label="")
+	last_name = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), 
+							 label="")
+	gender = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Gender", "class":"form-control"}), 
+							 label="")
+	phone = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Phone", "class":"form-control"}), 
+							 label="")
+	address = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Address", "class":"form-control"}), 
+							 label="")
+	city = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"City", "class":"form-control"}), 
+							 label="")
+	state = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"State", "class":"form-control"}), 
+							 label="")
+	zipcode = forms.CharField(required=True, 
+							 widget=forms.widgets.TextInput(attrs={"placeholder":"Zipcode", "class":"form-control"}), 
+							 label="")						 						 						 						 						 						 
+	DOB = forms.DateField(required=True, 
+					   widget=forms.widgets.DateInput(attrs={"placeholder":"Date of Birth", "class":"form-control"}),
+					   label="Year-Month-Day")
+	SSN = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"SSN", "class":"form-control"}), 
+						 label="")
+	employment_number = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Employment Number", "class":"form-control"}), 
+						 label="")						 					   	
+	specialty = forms.ChoiceField(required=True, 
+							 choices=realSpecialty,
+                             widget=forms.Select(attrs={"placeholder":"Specialty", "class":"form-control"}), 
+							 label="")
+	class Meta:
+		model = Administrative_Associate
+		exclude = ("user",)
+
 
 
 
 # Create Add Request Form
 class AddRequestForm(forms.ModelForm):
-<<<<<<< HEAD
     
     patient = forms.ModelChoiceField(queryset=Patient.objects.all(), required=True,
         widget=forms.widgets.Select(attrs={"placeholder": "Patient", "class": "form-control"}),
         label="Patient"
     )
-    doctor = forms.ModelChoiceField(
-    queryset=Doctor.objects.all(),
+    physician = forms.ModelChoiceField(
+    queryset=Physician.objects.all(),
     required=True,
-    widget=forms.widgets.Select(attrs={"placeholder": "Doctor", "class": "form-control"}),
-    label="Doctor",
+    widget=forms.widgets.Select(attrs={"placeholder": "Physician", "class": "form-control"}),
+    label="Physician",
     to_field_name="id"  # This specifies which field to use as the value
 	)
-=======
-	request_id = forms.IntegerField(required=True, 
-							  widget=forms.widgets.TextInput(attrs={"placeholder":"Request ID", "class":"form-control"}), 
-							  label="")
-	SSN = forms.IntegerField(required=True, 
-							 widget=forms.widgets.TextInput(attrs={"placeholder":"SSN", "class":"form-control"}), 
-							 label="")
-	doctor_id = forms.IntegerField(required=True, 
-					   widget=forms.widgets.DateInput(attrs={"placeholder":"Doctor ID", "class":"form-control"}),
-					   label="Year-Month-Day")	
-	description = forms.ChoiceField(required=True, 
-							 choices=realSpecialty,
-                             widget=forms.Select(attrs={"placeholder":"Description", "class":"form-control"}), 
-							 label="")
-	request_date = forms.DateField(required=True, 
-					   widget=forms.widgets.DateInput(attrs={"placeholder":"Request Date", "class":"form-control"}),
-					   label="Year-Month-Day")
-	
-	class Meta:
-		model = Request
-		exclude = ("user",)
-
-
-
-
-
-# Create Add Illness Form
-class AddIllnessForm(forms.ModelForm):
-	common_name = forms.CharField(required=True, 
-							  widget=forms.widgets.TextInput(attrs={"placeholder":"Common Name", "class":"form-control"}), 
-							  label="")
->>>>>>> refs/remotes/origin/main
 
     treatment_type = forms.ChoiceField(
         choices=[('General', 'General'), ('Surgery', 'Surgery')],
@@ -161,7 +332,48 @@ class AddIllnessForm(forms.ModelForm):
         fields = ['patient', 'doctor', 'treatment_type', 'description','request_date']
 
 
-
+# Create Add Medication Form
+class AddMedicationForm(forms.ModelForm):
+	
+	medication_id = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Medication ID", "class":"form-control"}), 
+						 label="")	
+	patient_id = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Patient ID", "class":"form-control"}), 
+						 label="")		
+	quantity_on_hand = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Quantity on Hand", "class":"form-control"}), 
+						 label="")	
+	quantity_on_order = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Quantity on Order", "class":"form-control"}), 
+						 label="")	
+	unit_cost = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Unit Cost", "class":"form-control"}), 
+						 label="")
+	YTD_usage = forms.IntegerField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"YTD Usage", "class":"form-control"}), 
+						 label="")						 						 					 					 				 
+	physician = forms.CharField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Physician", "class":"form-control"}), 
+						 label="")
+	description = forms.CharField(required=True, 
+						 widget=forms.widgets.TextInput(attrs={"placeholder":"Description", "class":"form-control"}), 
+						 label="")
+	name = forms.CharField(required=True, 
+						   widget=forms.widgets.TextInput(attrs={"placeholder":"Name", "class":"form-control"}), 
+						   label="")
+	severity = forms.CharField(required=True, 
+						widget=forms.widgets.TextInput(attrs={"placeholder":"Severity", "class":"form-control"}), 
+						label="")
+	prescription_date = forms.DateField(
+        required=False,
+        widget=forms.widgets.DateInput(attrs={"placeholder": "Prescription Date", "class": "form-control"}),
+        label="Prescription Date"
+    )					
+	
+	class Meta:
+		model = Medication
+		exclude = ("user",)
 
 
 
@@ -248,11 +460,11 @@ class AddInPatientForm(forms.ModelForm):
         label="Discharge Date"
     )
     
-    doctor = forms.ModelChoiceField(
-    queryset=Doctor.objects.all(),
+    physician = forms.ModelChoiceField(
+    queryset=Physician.objects.all(),
     required=True,
-    widget=forms.widgets.Select(attrs={"placeholder": "Doctor", "class": "form-control"}),
-    label="Doctor",
+    widget=forms.widgets.Select(attrs={"placeholder": "Physician", "class": "form-control"}),
+    label="Physician",
     to_field_name="id"  # This specifies which field to use as the value
 	)
     nurse = forms.ModelChoiceField(
@@ -274,4 +486,4 @@ class AddInPatientForm(forms.ModelForm):
 
     class Meta:
         model = InPatient
-        fields = ['patient', 'bed', 'admission_date', 'discharge_date', 'doctor', 'nurse', 'treatment_type']
+        fields = ['patient', 'bed', 'admission_date', 'discharge_date', 'physician', 'nurse', 'treatment_type']

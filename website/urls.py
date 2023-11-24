@@ -20,22 +20,31 @@ urlpatterns = [
     path('patient_management/update_patient/<int:pk>', views.update_patient, name='update_patient'),
 
 
-    # Doctor URLs
-    path('patient_management/doctor_table/', views.see_doctor_table, name='doctor_table'),
-    path('patient_management/doctor<int:pk>', views.doctor_record, name='doctor'),
-    path('patient_management/delete_doctor<int:pk>', views.delete_doctor, name='delete_doctor'),
-    path('patient_management/add_doctor/', views.add_doctor, name='add_doctor'),
-    path('patient_management/update_doctor/<int:pk>', views.update_doctor, name='update_doctor'),
+    # Physician URLs
+    path('patient_management/physician_table/', views.see_physician_table, name='physician_table'),
+    path('patient_management/physician<int:pk>', views.physician_record, name='physician'),
+    path('patient_management/delete_physician<int:pk>', views.delete_physician, name='delete_physician'),
+    path('patient_management/add_physician/', views.add_physician, name='add_physician'),
+    path('patient_management/update_physician/<int:pk>', views.update_physician, name='update_physician'),
 
-<<<<<<< HEAD
-=======
-    # Illness URLs
-    path('patient_management/illness_table/', views.see_illness_table, name='illness_table'),
-    path('patient_management/illness<int:pk>', views.illness_record, name='illness'),
-    path('patient_management/delete_illness<int:pk>', views.delete_illness, name='delete_illness'),
-    path('patient_management/add_illness/', views.add_illness, name='add_illness'),
-    path('patient_management/update_illness/<int:pk>', views.update_illness, name='update_illness'),
->>>>>>> refs/remotes/origin/main
+
+   # Surgeon URLs
+    path('patient_management/surgeon_table/', views.see_surgeon_table, name='surgeon_table'),
+    path('patient_management/surgeon<int:pk>', views.surgeon_record, name='surgeon'),
+    path('patient_management/delete_surgeon<int:pk>', views.delete_surgeon, name='delete_surgeon'),
+    path('patient_management/add_surgeon/', views.add_surgeon, name='add_surgeon'),
+    path('patient_management/update_surgeon/<int:pk>', views.update_surgeon, name='update_surgeon'),
+
+
+   # Nurse URLs
+    path('patient_management/nurse_table/', views.see_nurse_table, name='nurse_table'),
+    path('patient_management/nurse<int:pk>', views.nurse_record, name='nurse'),
+    path('patient_management/delete_nurse<int:pk>', views.delete_nurse, name='delete_nurse'),
+    path('patient_management/add_nurse/', views.add_nurse, name='add_nurse'),
+    path('patient_management/update_nurse/<int:pk>', views.update_nurse, name='update_nurse'),
+
+
+
 
     # Request URLs
     path('patient_management/request_table/', views.see_request_table, name='request_table'),
